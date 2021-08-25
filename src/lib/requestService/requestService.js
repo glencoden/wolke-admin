@@ -33,6 +33,10 @@ class RequestService {
         return this._post(`${oAuthUrl}/register`, { username, password, admin_password, grant_type: 'password' });
     }
 
+    deleteOAuthUser({ username, admin_password }) {
+        return this._post(`${oAuthUrl}/delete`, { username, admin_password, grant_type: 'password' }); // TODO do we need grant_type?
+    }
+
     registerCardsUser({ name, isAdmin, from, to, admin_password }) {
         return this._post(`${cardsUrl}/register`, { name, isAdmin, from, to, admin_password });
     }
