@@ -4,8 +4,10 @@
 
 .top-line {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 1fr;
     grid-column-gap: 20px;
+    justify-items: center;
+    width: 300px;
     padding: 20px 0 0;
     z-index: 1000;
 }
@@ -15,6 +17,10 @@
     grid-row-gap: 20px;
     justify-items: center;
     padding-top: 60px;
+}
+
+.input-field {
+    width: 240px;
 }
 
 .title, .checkbox, .cta-button {

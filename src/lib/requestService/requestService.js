@@ -12,8 +12,20 @@ function parseResponse(resp) {
     return resp.json().then(json => Promise.reject(json));
 }
 
+function encodeURI(data) {
+    const formBody = [];
+    for (const key in data) {
+        const encodedKey = encodeURIComponent(key);
+        const encodedValue = encodeURIComponent(data[key]);
+        formBody.push(`${encodedKey}=${encodedValue}`);
+    }
+    return formBody.join('&');
+}
+
 
 class RequestService {
+    _oAuth2_access_token = '';
+
     _get(url) {
         return fetch(url).then(parseResponse);
     }
@@ -27,6 +39,25 @@ class RequestService {
                 body
             }))
             .then(parseResponse);
+    }
+
+    _postEncodeURI(url, data) {
+        return Promise.resolve()
+            .then(() => encodeURI(data))
+            .then(body => fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                body
+            }))
+            .then(parseResponse);
+    }
+
+    isAuthenticated() {
+        return !!this._oAuth2_access_token;
+    }
+
+    loginToWolke({ username, password }) {
+        return this._postEncodeURI(`${oAuthUrl}/login`, { username, password, grant_type: 'password', client_id: null, client_secret: null });
     }
 
     registerOAuthUser({ username, password, admin_password }) {

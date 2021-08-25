@@ -2,8 +2,10 @@ import { useRef, useState } from 'react';
 import './App.css';
 import { Button, ButtonGroup, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, TextField } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { requestService } from './lib/requestService/requestService';
 import OAuth from './features/OAuth/OAuth';
 import Cards from './features/Cards/Cards';
+import Login from './components/Login/Login';
 
 const Features = {
     NONE: 'none',
@@ -22,16 +24,13 @@ const featureComponents = {
 
 function App() {
     const anchorRef = useRef(null);
+
     const [ adminPassword, setAdminPassword ] = useState('');
-    const [open, setOpen] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [ open, setOpen ] = useState(false);
+    const [ selectedIndex, setSelectedIndex ] = useState(0);
 
-    const currentFeature = Object.values(Features)[selectedIndex];
+    const currentFeature = featureNames[selectedIndex];
     const FeatureComponent = featureComponents[currentFeature];
-
-    const handleClick = () => {
-        console.info(`You clicked ${featureNames[selectedIndex]}`);
-    };
 
     const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
@@ -50,6 +49,14 @@ function App() {
         setOpen(false);
     };
 
+    if (!requestService.isAuthenticated()) {
+        return (
+            <div className="App center-column">
+                <Login />
+            </div>
+        );
+    }
+
     return (
         <div className="App center-column">
             <div className="top-line">
@@ -60,7 +67,9 @@ function App() {
                     onChange={({ target }) => setAdminPassword(target.value)}
                 />
                 <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-                    <Button onClick={handleClick}>{featureNames[selectedIndex]}</Button>
+                    <Button>
+                        {featureNames[selectedIndex]}
+                    </Button>
                     <Button
                         color="primary"
                         size="small"

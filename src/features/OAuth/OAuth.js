@@ -15,11 +15,13 @@ function OAuth({ adminPassword }) {
                     Register OAuth2 User
                 </Typography>
                 <TextField
+                    className="input-field"
                     label="name"
                     value={registerUserName}
                     onChange={({ target }) => setRegisterUserName(target.value)}
                 />
                 <TextField
+                    className="input-field"
                     label="password"
                     value={password}
                     onChange={({ target }) => setPassword(target.value)}
@@ -44,6 +46,7 @@ function OAuth({ adminPassword }) {
                     Delete OAuth2 User
                 </Typography>
                 <TextField
+                    className="input-field"
                     label="name"
                     value={deleteUserName}
                     onChange={({ target }) => setDeleteUserName(target.value)}

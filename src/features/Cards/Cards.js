@@ -19,16 +19,19 @@ function Cards({ adminPassword }) {
                 Register Cards User
             </Typography>
             <TextField
+                className="input-field"
                 label="name"
                 value={userName}
                 onChange={({ target }) => setUserName(target.value)}
             />
             <TextField
+                className="input-field"
                 label="from"
                 value={from}
                 onChange={({ target }) => setFrom(target.value)}
             />
             <TextField
+                className="input-field"
                 label="to"
                 value={to}
                 onChange={({ target }) => setTo(target.value)}
