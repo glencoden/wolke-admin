@@ -1,5 +1,5 @@
 .App {
-
+    margin-bottom: 100px;
 }
 
 .top-line {
@@ -15,6 +15,10 @@
     grid-row-gap: 20px;
     justify-items: center;
     padding-top: 60px;
+}
+
+.title, .checkbox, .cta-button {
+    justify-self: start;
 }
 
 .cta-button {

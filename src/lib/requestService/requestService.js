@@ -38,7 +38,7 @@ class RequestService {
     }
 
     registerCardsUser({ name, isAdmin, from, to, admin_password }) {
-        return this._post(`${cardsUrl}/register`, { name, isAdmin, from, to, admin_password });
+        return this._post(`${cardsUrl}/upsert_user`, { name, isAdmin, from, to, admin_password });
     }
 }
 

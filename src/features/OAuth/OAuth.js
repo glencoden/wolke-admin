@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Typography } from '@material-ui/core';
 import { requestService } from '../../lib/requestService/requestService';
 
 
@@ -11,6 +11,9 @@ function OAuth({ adminPassword }) {
     return (
         <>
             <div className="center-column">
+                <Typography className="title">
+                    Register OAuth2 User
+                </Typography>
                 <TextField
                     label="name"
                     value={registerUserName}
@@ -33,10 +36,13 @@ function OAuth({ adminPassword }) {
                             .then(resp => console.log(resp));
                     }}
                 >
-                    Register OAuth User
+                    Register
                 </Button>
             </div>
             <div className="center-column">
+                <Typography className="title">
+                    Delete OAuth2 User
+                </Typography>
                 <TextField
                     label="name"
                     value={deleteUserName}
@@ -53,7 +59,7 @@ function OAuth({ adminPassword }) {
                             .then(resp => console.log(resp));
                     }}
                 >
-                    Delete OAuth User
+                    Delete
                 </Button>
             </div>
         </>
