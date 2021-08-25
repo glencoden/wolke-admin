@@ -52,7 +52,12 @@ function App() {
     if (!isAuthenticated) {
         return (
             <div className="App center-column">
-                <Login onSuccess={() => setIsAuthenticated(true)} />
+                <Login
+                    onSuccess={adminPassword => {
+                        setAdminPassword(adminPassword);
+                        setIsAuthenticated(true);
+                    }}
+                />
             </div>
         );
     }

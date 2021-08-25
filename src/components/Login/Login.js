@@ -38,7 +38,7 @@ function Login({ onSuccess }) {
                                 console.log('login failed', resp);
                                 return;
                             }
-                            onSuccess();
+                            onSuccess(password);
                         });
                 }}
             >
