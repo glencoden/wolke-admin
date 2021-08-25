@@ -1,5 +1,5 @@
 const rootUrl = process.env.NODE_ENV === 'development'
-    ? 'http://192.168.1.3:80'
+    ? 'http://localhost'
     : 'https://wolke.glencoden.de';
 
 const oAuthUrl = `${rootUrl}/auth`;
@@ -29,12 +29,12 @@ class RequestService {
             .then(parseResponse);
     }
 
-    registerOAuthUser() {
-        return this._post(`${oAuthUrl}/register`, {});
+    registerOAuthUser({ username, password, admin_password }) {
+        return this._post(`${oAuthUrl}/register`, { username, password, admin_password, grant_type: 'password' });
     }
 
-    registerCardsUser() {
-        return this._post(`${cardsUrl}/register`, {});
+    registerCardsUser({ name, isAdmin, from, to, admin_password }) {
+        return this._post(`${cardsUrl}/register`, { name, isAdmin, from, to, admin_password });
     }
 }
 
