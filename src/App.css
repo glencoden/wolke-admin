@@ -19,11 +19,11 @@
     padding-top: 60px;
 }
 
-.input-field {
+.title, .input-field {
     width: 240px;
 }
 
-.title, .checkbox, .cta-button {
+.checkbox, .cta-button {
     justify-self: start;
 }
 

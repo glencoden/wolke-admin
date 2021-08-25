@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import './App.css';
 import { Button, ButtonGroup, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, TextField } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { requestService } from './lib/requestService/requestService';
 import OAuth from './features/OAuth/OAuth';
 import Cards from './features/Cards/Cards';
 import Login from './components/Login/Login';
@@ -25,6 +24,7 @@ const featureComponents = {
 function App() {
     const anchorRef = useRef(null);
 
+    const [ isAuthenticated, setIsAuthenticated ] = useState(false);
     const [ adminPassword, setAdminPassword ] = useState('');
     const [ open, setOpen ] = useState(false);
     const [ selectedIndex, setSelectedIndex ] = useState(0);
@@ -49,10 +49,10 @@ function App() {
         setOpen(false);
     };
 
-    if (!requestService.isAuthenticated()) {
+    if (!isAuthenticated) {
         return (
             <div className="App center-column">
-                <Login />
+                <Login onSuccess={() => setIsAuthenticated(true)} />
             </div>
         );
     }
@@ -96,6 +96,7 @@ function App() {
                                         {featureNames.map((name, index) => (
                                             <MenuItem
                                                 key={name}
+                                                disabled={!adminPassword}
                                                 selected={index === selectedIndex}
                                                 onClick={(event) => handleMenuItemClick(event, index)}
                                             >

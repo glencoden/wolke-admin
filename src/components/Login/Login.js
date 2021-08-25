@@ -3,7 +3,7 @@ import { Button, TextField, Typography } from '@material-ui/core';
 import { requestService } from '../../lib/requestService/requestService';
 
 
-function Login() {
+function Login({ onSuccess }) {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
 
@@ -33,7 +33,13 @@ function Login() {
                         username,
                         password
                     })
-                        .then(resp => console.log(resp));
+                        .then(resp => {
+                            if (!resp.success) {
+                                console.log('login failed', resp);
+                                return;
+                            }
+                            onSuccess();
+                        });
                 }}
             >
                 Login
