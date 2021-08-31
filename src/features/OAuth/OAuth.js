@@ -26,17 +26,15 @@ function OAuth({ adminPassword }) {
         <div className="feature-box">
             <Paper variant="outlined" className="action-box">
                 <div className="elements-box">
-                    <Typography className="title">
+                    <Typography>
                         Register OAuth2 User
                     </Typography>
                     <TextField
-                        className="input-field"
                         label="name"
                         value={registerUserName}
                         onChange={({ target }) => setRegisterUserName(target.value)}
                     />
                     <TextField
-                        className="input-field"
                         label="password"
                         value={password}
                         onChange={({ target }) => setPassword(target.value)}
@@ -44,7 +42,6 @@ function OAuth({ adminPassword }) {
                 </div>
                 <div className="elements-box">
                     <Button
-                        className="cta-button"
                         variant="contained"
                         onClick={() => {
                             requestService.registerOAuthUser({
@@ -61,11 +58,10 @@ function OAuth({ adminPassword }) {
             </Paper>
             <Paper variant="outlined" className="action-box">
                 <div className="elements-box">
-                    <Typography className="title">
+                    <Typography>
                         Delete OAuth2 User
                     </Typography>
                     <TextField
-                        className="input-field"
                         label="name"
                         value={deleteUserName}
                         onChange={({ target }) => setDeleteUserName(target.value)}
@@ -73,7 +69,6 @@ function OAuth({ adminPassword }) {
                 </div>
                 <div className="elements-box">
                     <Button
-                        className="cta-button"
                         variant="contained"
                         onClick={() => {
                             requestService.deleteOAuthUser({
@@ -89,11 +84,11 @@ function OAuth({ adminPassword }) {
             </Paper>
             <Paper variant="outlined" className="action-box">
                 <div className="elements-box">
-                    <Typography className="title">
+                    <Typography>
                         All Users
                     </Typography>
                     {users.map((user, index) => (
-                        <Typography key={index} className="title" color="textSecondary" variant="caption">
+                        <Typography key={index} color="textSecondary" variant="caption">
                             {user.username}
                         </Typography>
                     ))}

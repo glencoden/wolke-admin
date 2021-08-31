@@ -32,36 +32,31 @@ function Cards({ adminPassword }) {
         <div className="feature-box">
             <Paper variant="outlined" className="action-box">
                 <div className="elements-box">
-                    <Typography className="title">
+                    <Typography>
                         Register Cards User
                     </Typography>
                     <TextField
-                        className="input-field"
                         label="name"
                         value={registerUserName}
                         onChange={({ target }) => setRegisterUserName(target.value)}
                     />
                     <TextField
-                        className="input-field"
                         label="from"
                         value={from}
                         onChange={({ target }) => setFrom(target.value)}
                     />
                     <TextField
-                        className="input-field"
                         label="to"
                         value={to}
                         onChange={({ target }) => setTo(target.value)}
                     />
                     <FormControlLabel
-                        className="checkbox"
                         control={<Checkbox checked={isAdmin} onChange={() => setIsAdmin(prevState => !prevState)} name="checkedA" />}
                         label="is admin"
                     />
                 </div>
                 <div className="elements-box">
                     <Button
-                        className="cta-button"
                         variant="contained"
                         onClick={() => {
                             requestService.registerCardsUser({
@@ -80,11 +75,10 @@ function Cards({ adminPassword }) {
             </Paper>
             <Paper variant="outlined" className="action-box">
                 <div className="elements-box">
-                    <Typography className="title">
+                    <Typography>
                         Delete Cards User
                     </Typography>
                     <TextField
-                        className="input-field"
                         label="name"
                         value={deleteUserName}
                         onChange={({ target }) => setDeleteUserName(target.value)}
@@ -92,7 +86,6 @@ function Cards({ adminPassword }) {
                 </div>
                 <div className="elements-box">
                     <Button
-                        className="cta-button"
                         variant="contained"
                         onClick={() => {
                             requestService.deleteCardsUser({
@@ -108,11 +101,11 @@ function Cards({ adminPassword }) {
             </Paper>
             <Paper variant="outlined" className="action-box">
                 <div className="elements-box">
-                    <Typography className="title">
+                    <Typography>
                         All Users
                     </Typography>
                     {users.map((user, index) => (
-                        <Typography key={index} className="title" color="textSecondary" variant="caption">
+                        <Typography key={index} color="textSecondary" variant="caption">
                             {user.name}
                         </Typography>
                     ))}
