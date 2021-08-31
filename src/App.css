@@ -21,7 +21,7 @@
 .top-line {
     display: flex;
     justify-content: space-between;
-    width: calc(var(--action-box-size) - var(--space-s));
+    width: calc(var(--action-box-size) - (4 * var(--space-s)));
     z-index: 100;
     margin-bottom: var(--space-m);
 }

@@ -1,7 +1,6 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
-import { Button, ButtonGroup, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from '@material-ui/core';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { Button, Menu, MenuItem } from '@material-ui/core';
 import { requestService } from './lib/requestService/requestService';
 import OAuth from './features/OAuth/OAuth';
 import Cards from './features/Cards/Cards';
@@ -23,30 +22,22 @@ const featureComponents = {
 
 
 function App() {
-    const anchorRef = useRef(null);
-
+    const [ menuRef, setMenuRef ] = useState(null);
     const [ adminPassword, setAdminPassword ] = useState('');
-    const [ open, setOpen ] = useState(false);
-    const [ selectedIndex, setSelectedIndex ] = useState(0);
+    const [ currentFeature, setCurrentFeature ] = useState(featureNames[0]);
 
-    const currentFeature = featureNames[selectedIndex];
     const FeatureComponent = featureComponents[currentFeature];
 
-    const handleMenuItemClick = (event, index) => {
-        setSelectedIndex(index);
-        setOpen(false);
+    const handleMenuClick = event => {
+        setMenuRef(event.currentTarget);
     };
 
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
-    };
-
-    const handleClose = event => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return;
+    const handleMenuClose = ({ target }) => {
+        const updatedFeature = target.innerText;
+        if (featureNames.includes(updatedFeature)) {
+            setCurrentFeature(updatedFeature);
         }
-
-        setOpen(false);
+        setMenuRef(null);
     };
 
     const onLogin = adminPassword => {
@@ -73,50 +64,28 @@ function App() {
     return (
         <div className="App">
             <div className="top-line">
-                <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-                    <Button>
-                        {featureNames[selectedIndex]}
-                    </Button>
-                    <Button
-                        color="primary"
-                        size="small"
-                        aria-controls={open ? 'split-button-menu' : undefined}
-                        aria-expanded={open ? 'true' : undefined}
-                        aria-label="select merge strategy"
-                        aria-haspopup="menu"
-                        onClick={handleToggle}
-                    >
-                        <ArrowDropDownIcon />
-                    </Button>
-                </ButtonGroup>
-                <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                    {({ TransitionProps, placement }) => (
-                        <Grow
-                            {...TransitionProps}
-                            style={{
-                                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
-                            }}
-                        >
-                            <Paper>
-                                <ClickAwayListener onClickAway={handleClose}>
-                                    <MenuList id="split-button-menu">
-                                        {featureNames.map((name, index) => (
-                                            <MenuItem
-                                                key={name}
-                                                disabled={!adminPassword}
-                                                selected={index === selectedIndex}
-                                                onClick={(event) => handleMenuItemClick(event, index)}
-                                            >
-                                                {name}
-                                            </MenuItem>
-                                        ))}
-                                    </MenuList>
-                                </ClickAwayListener>
-                            </Paper>
-                        </Grow>
-                    )}
-                </Popper>
-
+                <Button
+                    variant="contained"
+                    color="primary"
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={handleMenuClick}
+                >
+                    {currentFeature}
+                </Button>
+                <Menu
+                    id="simple-menu"
+                    anchorEl={menuRef}
+                    keepMounted
+                    open={Boolean(menuRef)}
+                    onClose={handleMenuClose}
+                >
+                    {featureNames.map((featureName, index) => (
+                        <MenuItem key={index} onClick={handleMenuClose}>
+                            {featureName}
+                        </MenuItem>
+                    ))}
+                </Menu>
                 <Button
                     variant="contained"
                     onClick={() => requestService.logout().then(onLogout)}
