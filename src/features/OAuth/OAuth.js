@@ -3,7 +3,7 @@ import { Button, Paper, TextField, Typography } from '@material-ui/core';
 import { requestService } from '../../lib/requestService/requestService';
 
 
-function OAuth({ adminPassword }) {
+function OAuth({ setAlert }) {
     const [ registerUserName, setRegisterUserName ] = useState('');
     const [ password, setPassword ] = useState('');
 
@@ -12,7 +12,7 @@ function OAuth({ adminPassword }) {
     const [ users, setUsers ] = useState([]);
 
     useEffect(() => {
-        requestService.getOAuthUsers({ admin_password: adminPassword })
+        requestService.getOAuthUsers()
             .then(resp => {
                 if (!resp.success) {
                     console.log('something went wrong getting oAuth users');
@@ -20,7 +20,7 @@ function OAuth({ adminPassword }) {
                 }
                 setUsers(resp.users);
             });
-    }, [ adminPassword ]);
+    }, []);
 
     return (
         <div className="feature-box">
@@ -47,7 +47,6 @@ function OAuth({ adminPassword }) {
                             requestService.registerOAuthUser({
                                 username: registerUserName,
                                 password,
-                                admin_password: adminPassword
                             })
                                 .then(resp => console.log(resp));
                         }}
@@ -73,7 +72,6 @@ function OAuth({ adminPassword }) {
                         onClick={() => {
                             requestService.deleteOAuthUser({
                                 username: deleteUserName,
-                                admin_password: adminPassword
                             })
                                 .then(resp => console.log(resp));
                         }}

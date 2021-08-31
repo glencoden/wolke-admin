@@ -7,7 +7,7 @@ function parseLangInput(input) {
 }
 
 
-function Cards({ adminPassword }) {
+function Cards({ setAlert }) {
     const [ registerUserName, setRegisterUserName ] = useState('');
     const [ from, setFrom ] = useState('');
     const [ to, setTo ] = useState('');
@@ -60,7 +60,6 @@ function Cards({ adminPassword }) {
                         variant="contained"
                         onClick={() => {
                             requestService.registerCardsUser({
-                                admin_password: adminPassword,
                                 name: registerUserName,
                                 from: parseLangInput(from),
                                 to: parseLangInput(to),
@@ -89,7 +88,6 @@ function Cards({ adminPassword }) {
                         variant="contained"
                         onClick={() => {
                             requestService.deleteCardsUser({
-                                admin_password: adminPassword,
                                 name: deleteUserName,
                             })
                                 .then(resp => console.log(resp));

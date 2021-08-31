@@ -3,7 +3,7 @@ import { Button, Paper, TextField, Typography } from '@material-ui/core';
 import { requestService } from '../../lib/requestService/requestService';
 
 
-function Login({ onSuccess }) {
+function Login({ onSuccess, setAlert }) {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
 
@@ -36,10 +36,13 @@ function Login({ onSuccess }) {
                             })
                                 .then(resp => {
                                     if (!resp.success) {
-                                        console.log('login failed', resp);
+                                        setAlert({ title: 'Something went wrong', text: resp.message, isError: true });
                                         return;
                                     }
                                     onSuccess(password);
+                                })
+                                .catch(err => {
+                                    setAlert({ title: 'Something went wrong', text: err.message, isError: true });
                                 });
                         }}
                     >
