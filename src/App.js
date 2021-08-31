@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import './App.css';
-import { Button, ButtonGroup, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, TextField } from '@material-ui/core';
+import { Button, ButtonGroup, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { requestService } from './lib/requestService/requestService';
 import OAuth from './features/OAuth/OAuth';
 import Cards from './features/Cards/Cards';
 import Login from './components/Login/Login';
@@ -24,7 +25,6 @@ const featureComponents = {
 function App() {
     const anchorRef = useRef(null);
 
-    const [ isAuthenticated, setIsAuthenticated ] = useState(false);
     const [ adminPassword, setAdminPassword ] = useState('');
     const [ open, setOpen ] = useState(false);
     const [ selectedIndex, setSelectedIndex ] = useState(0);
@@ -41,7 +41,7 @@ function App() {
         setOpen((prevOpen) => !prevOpen);
     };
 
-    const handleClose = (event) => {
+    const handleClose = event => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
             return;
         }
@@ -49,14 +49,22 @@ function App() {
         setOpen(false);
     };
 
-    if (!isAuthenticated) {
+    const onLogin = adminPassword => {
+        setAdminPassword(adminPassword);
+    }
+
+    const onLogout = resp => {
+        if (!resp.success) {
+            return;
+        }
+        setAdminPassword('');
+    };
+
+    if (!adminPassword) {
         return (
             <div className="App center-column">
                 <Login
-                    onSuccess={adminPassword => {
-                        setAdminPassword(adminPassword);
-                        setIsAuthenticated(true);
-                    }}
+                    onSuccess={onLogin}
                 />
             </div>
         );
@@ -65,12 +73,6 @@ function App() {
     return (
         <div className="App center-column">
             <div className="top-line">
-                <TextField
-                    label="admin password"
-                    type="password"
-                    value={adminPassword}
-                    onChange={({ target }) => setAdminPassword(target.value)}
-                />
                 <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
                     <Button>
                         {featureNames[selectedIndex]}
@@ -114,6 +116,13 @@ function App() {
                         </Grow>
                     )}
                 </Popper>
+
+                <Button
+                    variant="contained"
+                    onClick={() => requestService.logout().then(onLogout)}
+                >
+                    Logout
+                </Button>
             </div>
 
             {FeatureComponent && (

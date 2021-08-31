@@ -80,6 +80,15 @@ class RequestService {
             });
     }
 
+    logout() {
+        return new Promise(resolve => {
+            this._oAuth2_access_token = '';
+            resolve({
+                success: true
+            });
+        });
+    }
+
     getOAuthUsers({ admin_password }) {
         return this._post(`${oAuthUrl}/get_all`, { admin_password });
     }

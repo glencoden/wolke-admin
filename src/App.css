@@ -8,7 +8,6 @@
     grid-column-gap: 20px;
     justify-items: center;
     width: 300px;
-    padding: 20px 0 0;
     z-index: 1000;
 }
 
@@ -33,6 +32,6 @@
 
 @media only screen and (min-width: 600px) {
     .top-line {
-        padding: 60px 0 20px;
+        padding-bottom: 20px;
     }
 }
