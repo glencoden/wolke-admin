@@ -62,7 +62,7 @@ function App() {
 
     if (!adminPassword) {
         return (
-            <div className="App center-column">
+            <div className="App">
                 <Login
                     onSuccess={onLogin}
                 />
@@ -71,7 +71,7 @@ function App() {
     }
 
     return (
-        <div className="App center-column">
+        <div className="App">
             <div className="top-line">
                 <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
                     <Button>

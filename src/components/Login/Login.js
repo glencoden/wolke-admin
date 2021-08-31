@@ -8,7 +8,7 @@ function Login({ onSuccess }) {
     const [ password, setPassword ] = useState('');
 
     return (
-        <div className="center-column">
+        <div className="action-box">
             <Typography className="title">
                 Login
             </Typography>

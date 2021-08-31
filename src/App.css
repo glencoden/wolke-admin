@@ -1,37 +1,68 @@
+:root {
+    --space-s: 20px;
+    --space-m: 40px;
+    --space-l: 60px;
+    --action-element-width: 240px;
+    --max-content-width: 1000px;
+}
+
 .App {
-    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: calc(2 * var(--space-l));
 }
 
 .top-line {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 20px;
-    justify-items: center;
-    width: 300px;
-    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    width: calc(var(--action-element-width) + var(--space-s));
+    z-index: 100;
+    margin: var(--space-m) 0;
 }
 
-.center-column {
-    display: grid;
-    grid-row-gap: 20px;
-    justify-items: center;
-    padding-top: 60px;
+.feature-box {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: var(--max-content-width);
+    padding: 0 var(--space-l);
+    margin-left: calc(-1 * var(--space-m));
+    margin-top: calc(-1 * var(--space-m));
+}
+
+.feature-box > * {
+    padding: var(--space-s);
+    margin-left: var(--space-m);
+    margin-top: var(--space-m);
+}
+
+.action-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: var(--action-element-width);
+    padding-top: calc(-1 * var(--space-s));
+}
+
+.action-box > * {
+    margin-top: var(--space-s);
+}
+
+.elements-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.elements-box > * {
+    margin-bottom: var(--space-s) !important;
 }
 
 .title, .input-field {
-    width: 240px;
-}
-
-.checkbox, .cta-button {
-    justify-self: start;
-}
-
-.cta-button {
-    margin-top: 20px !important;
+    width: var(--action-element-width);
 }
 
 @media only screen and (min-width: 600px) {
     .top-line {
-        padding-bottom: 20px;
+        margin: var(--space-l) 0;
     }
 }
