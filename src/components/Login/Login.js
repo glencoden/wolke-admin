@@ -35,14 +35,14 @@ function Login({ onSuccess, setAlert }) {
                                 password
                             })
                                 .then(resp => {
-                                    if (!resp.success) {
-                                        setAlert({ title: 'Something went wrong', text: resp.message, isError: true });
+                                    if (!resp.ok) {
+                                        setAlert({ title: 'Login failed', error: resp });
                                         return;
                                     }
                                     onSuccess(password);
                                 })
-                                .catch(err => {
-                                    setAlert({ title: 'Something went wrong', text: err.message, isError: true });
+                                .catch(error => {
+                                    setAlert({ title: 'Error in request', error });
                                 });
                         }}
                     >

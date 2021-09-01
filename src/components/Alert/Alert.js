@@ -1,46 +1,56 @@
-import { useCallback, useEffect } from 'react';
-import { Dialog, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { useEffect } from 'react';
+import { Dialog, DialogContent, DialogContentText, DialogTitle, Typography } from '@material-ui/core';
 
 
-function Alert({ alert, setAlert }) {
-    const { title, text, isError, time } = alert;
-
-    const closeAlert = useCallback(
-        () => {
-            setAlert({ title: '', text: '', isError: false });
-        },
-        [ setAlert ]
-    );
+function Alert({ alert, reset }) {
+    const { title, text, error, time } = alert;
 
     useEffect(() => {
         if (!title && !text) {
             return;
         }
-        const timeoutId = setTimeout(closeAlert, (time ? time : 3) * 1000);
+        const timeoutId = setTimeout(reset, (error ? 60 : (time || 3)) * 1000);
         return () => clearTimeout(timeoutId);
-    }, [ closeAlert, title, text, time ]);
+    }, [ reset, title, text, error, time ]);
 
     const open = !!title || !!text;
+
+    const errorMessage = [];
+    if (error) {
+        for (const key in error) {
+            const value = error[key];
+            if (typeof value === 'string' || typeof value === 'number') {
+                errorMessage.push(`${key}: ${value}`);
+            }
+        }
+    }
 
     return (
         <Dialog
             open={open}
-            onClick={closeAlert}
+            onClick={reset}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
             {!!title && (
-                <DialogTitle id="alert-dialog-title">
-                    {`${isError ? 'Error: ' : ''}${title}`}
+                <DialogTitle id="alert-dialog-title" className={error ? 'alert-error' : ''}>
+                    {title}
                 </DialogTitle>
             )}
-            {!!text && (
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                {!!text && (
+                    <Typography>
                         {text}
-                    </DialogContentText>
-                </DialogContent>
-            )}
+                    </Typography>
+                )}
+                {errorMessage.length && errorMessage.map((message, index) => (
+                    <Typography key={index}>
+                        {message}
+                    </Typography>
+                ))}
+                </DialogContentText>
+            </DialogContent>
         </Dialog>
     );
 }

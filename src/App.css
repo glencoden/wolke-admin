@@ -59,6 +59,10 @@
     margin-bottom: var(--space-s) !important;
 }
 
+.alert-error {
+    color: red;
+}
+
 /* break when more than one action-box column will fit (> 2 * action-box-size + 3 * feature-box-grid-gap)  */
 @media only screen and (min-width: 684px) {
     .App {

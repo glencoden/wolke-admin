@@ -21,12 +21,14 @@ const featureComponents = {
     [Features.CARDS]: Cards
 };
 
+const resetAlertValue = () => ({ title: '', text: '', error: null });
+
 
 function App() {
     const [ isAuthenticated, setIsAuthenticated ] = useState(false);
     const [ menuRef, setMenuRef ] = useState(null);
     const [ currentFeature, setCurrentFeature ] = useState(featureNames[0]);
-    const [ alert, setAlert ] = useState({ title: '', text: '', isError: false });
+    const [ alert, setAlert ] = useState(resetAlertValue);
 
     const FeatureComponent = featureComponents[currentFeature];
 
@@ -46,10 +48,7 @@ function App() {
         setIsAuthenticated(true);
     }
 
-    const onLogoutSuccess = resp => {
-        if (!resp.success) {
-            return;
-        }
+    const onLogoutSuccess = () => {
         setAlert({ title: `You're logged out` });
         setIsAuthenticated(false);
     };
@@ -86,6 +85,7 @@ function App() {
                                 </MenuItem>
                             ))}
                         </Menu>
+
                         <Button
                             variant="contained"
                             onClick={() => requestService.logout().then(onLogoutSuccess)}
@@ -100,7 +100,7 @@ function App() {
                 </>
             )}
 
-            <Alert alert={alert} setAlert={setAlert} />
+            <Alert alert={alert} reset={() => setAlert(resetAlertValue)} />
         </div>
     );
 }
