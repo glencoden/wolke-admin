@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { Dialog, DialogContent, DialogContentText, DialogTitle, Typography } from '@material-ui/core';
 
+const alertDefaultTime = 2;
+
 
 function Alert({ alert, reset }) {
     const { title, text, error, time } = alert;
@@ -9,7 +11,7 @@ function Alert({ alert, reset }) {
         if (!title && !text) {
             return;
         }
-        const timeoutId = setTimeout(reset, (error ? 60 : (time || 3)) * 1000);
+        const timeoutId = setTimeout(reset, (error ? 60 : (time || alertDefaultTime)) * 1000);
         return () => clearTimeout(timeoutId);
     }, [ reset, title, text, error, time ]);
 
@@ -44,7 +46,7 @@ function Alert({ alert, reset }) {
                         {text}
                     </Typography>
                 )}
-                {errorMessage.length && errorMessage.map((message, index) => (
+                {!!errorMessage.length && errorMessage.map((message, index) => (
                     <Typography key={index}>
                         {message}
                     </Typography>

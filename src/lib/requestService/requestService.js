@@ -68,6 +68,7 @@ class RequestService {
     loginToWolke({ username, password }) {
         return this._postEncodeURI(`${oAuthUrl}/login`, { username, password, grant_type: 'password', client_id: null, client_secret: null })
             .then(resp => {
+                console.log('resp', resp.access_token);// TODO remove dev code
                 if (resp.ok) {
                     this._oAuth2_access_token = resp.access_token;
                     this._adminPassword = password;

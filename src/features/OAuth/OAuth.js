@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Button, Paper, TextField, Typography } from '@material-ui/core';
 import { requestService } from '../../lib/requestService/requestService';
 
@@ -11,16 +11,22 @@ function OAuth({ setAlert }) {
 
     const [ users, setUsers ] = useState([]);
 
-    useEffect(() => {
-        requestService.getOAuthUsers()
-            .then(resp => {
-                if (!resp.success) {
-                    console.log('something went wrong getting oAuth users');
-                    return;
-                }
-                setUsers(resp.users);
-            });
-    }, []);
+    const getUsers = useCallback(
+        () => {
+            requestService.getOAuthUsers()
+                .then(resp => {
+                    if (!resp.success) {
+                        setAlert({ title: 'Failed to get oAuth2 users', error: resp });
+                        return;
+                    }
+                    setUsers(resp.users);
+                })
+                .catch(error => setAlert({ title: 'request error', error }));
+        },
+        [ setAlert ]
+    );
+
+    useEffect(() => getUsers(), [ getUsers ]);
 
     return (
         <div className="feature-box">
@@ -48,7 +54,18 @@ function OAuth({ setAlert }) {
                                 username: registerUserName,
                                 password,
                             })
-                                .then(resp => console.log(resp));
+                                .then(resp => {
+                                    if (!resp.success) {
+                                        setAlert({ title: 'Failed to register oAuth2 user', error: resp });
+                                        return;
+                                    }
+                                    setRegisterUserName('');
+                                    setPassword('');
+                                    console.log(resp);// TODO remove dev code
+                                    setAlert({ title: 'Registered oAuth2 user' });
+                                    getUsers();
+                                })
+                                .catch(error => setAlert({ title: 'request error', error }));
                         }}
                     >
                         Register
@@ -73,7 +90,16 @@ function OAuth({ setAlert }) {
                             requestService.deleteOAuthUser({
                                 username: deleteUserName,
                             })
-                                .then(resp => console.log(resp));
+                                .then(resp => {
+                                    if (!resp.success) {
+                                        setAlert({ title: 'Failed to delete oAuth2 user', error: resp });
+                                        return;
+                                    }
+                                    setDeleteUserName('');
+                                    setAlert({ title: 'Deleted oAuth2 user' });
+                                    getUsers();
+                                })
+                                .catch(error => setAlert({ title: 'request error', error }));
                         }}
                     >
                         Delete

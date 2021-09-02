@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Button, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@material-ui/core';
 import { requestService } from '../../lib/requestService/requestService';
 
@@ -17,16 +17,22 @@ function Cards({ setAlert }) {
 
     const [ users, setUsers ] = useState([]);
 
-    useEffect(() => {
-        requestService.getCardsUsers()
-            .then(resp => {
-                if (!resp.success) {
-                    console.log('something went wrong getting cards users');
-                    return;
-                }
-                setUsers(resp.users);
-            });
-    }, []);
+    const getUsers = useCallback(
+        () => {
+            requestService.getCardsUsers()
+                .then(resp => {
+                    if (!resp.success) {
+                        setAlert({ title: 'Failed to get cards users', error: resp });
+                        return;
+                    }
+                    setUsers(resp.users);
+                })
+                .catch(error => setAlert({ title: 'request error', error }));
+        },
+        [ setAlert ]
+    );
+
+    useEffect(() => getUsers(), [ getUsers ]);
 
     return (
         <div className="feature-box">
@@ -65,7 +71,19 @@ function Cards({ setAlert }) {
                                 to: parseLangInput(to),
                                 isAdmin
                             })
-                                .then(resp => console.log(resp));
+                                .then(resp => {
+                                    if (!resp.success) {
+                                        setAlert({ title: 'Failed to register cards user', error: resp });
+                                        return;
+                                    }
+                                    setRegisterUserName('');
+                                    setFrom('');
+                                    setTo('');
+                                    setIsAdmin(false);
+                                    setAlert({ title: `Registered cards user ${resp.user.name}` });
+                                    getUsers();
+                                })
+                                .catch(error => setAlert({ title: 'request error', error }));
                         }}
                     >
                         Register
@@ -90,7 +108,16 @@ function Cards({ setAlert }) {
                             requestService.deleteCardsUser({
                                 name: deleteUserName,
                             })
-                                .then(resp => console.log(resp));
+                                .then(resp => {
+                                    if (!resp.success) {
+                                        setAlert({ title: 'Failed to delete cards user', error: resp });
+                                        return;
+                                    }
+                                    setDeleteUserName('');
+                                    setAlert({ title: 'Deleted cards user' });
+                                    getUsers();
+                                })
+                                .catch(error => setAlert({ title: 'request error', error }));
                         }}
                     >
                         Delete

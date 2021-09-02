@@ -41,9 +41,7 @@ function Login({ onSuccess, setAlert }) {
                                     }
                                     onSuccess(password);
                                 })
-                                .catch(error => {
-                                    setAlert({ title: 'Error in request', error });
-                                });
+                                .catch(error => setAlert({ title: 'request error', error }));
                         }}
                     >
                         Login
