@@ -62,18 +62,18 @@ class RequestService {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
                 body
-            }));
+            }))
+            .then(parseResponse);
     }
 
     loginToWolke({ username, password }) {
         return this._postEncodeURI(`${oAuthUrl}/login`, { username, password, grant_type: 'password', client_id: null, client_secret: null })
             .then(resp => {
-                console.log('resp', resp.access_token);// TODO remove dev code
-                if (resp.ok) {
-                    this._oAuth2_access_token = resp.access_token;
-                    this._adminPassword = password;
-                }
-                return resp;
+                this._oAuth2_access_token = resp.access_token;
+                this._adminPassword = password;
+                return {
+                    success: true
+                };
             });
     }
 

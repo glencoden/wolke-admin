@@ -35,7 +35,7 @@ function Login({ onSuccess, setAlert }) {
                                 password
                             })
                                 .then(resp => {
-                                    if (!resp.ok) {
+                                    if (!resp.success) {
                                         setAlert({ title: 'Login failed', error: resp });
                                         return;
                                     }

@@ -59,6 +59,10 @@
     margin-bottom: var(--space-s) !important;
 }
 
+.list-item {
+    margin: 0 !important;
+}
+
 .alert-error {
     color: red;
 }

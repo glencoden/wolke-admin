@@ -112,7 +112,7 @@ function OAuth({ setAlert }) {
                         All Users
                     </Typography>
                     {users.map((user, index) => (
-                        <Typography key={index} color="textSecondary" variant="caption">
+                        <Typography key={index} className="list-item" color="textSecondary" variant="caption">
                             {user.username}
                         </Typography>
                     ))}
