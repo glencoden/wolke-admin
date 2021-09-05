@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/wolke-admin/static/css/main.008a0982.chunk.css",
-    "main.js": "/wolke-admin/static/js/main.8a570ae5.chunk.js",
-    "main.js.map": "/wolke-admin/static/js/main.8a570ae5.chunk.js.map",
+    "main.css": "/wolke-admin/static/css/main.390b1af8.chunk.css",
+    "main.js": "/wolke-admin/static/js/main.da55e484.chunk.js",
+    "main.js.map": "/wolke-admin/static/js/main.da55e484.chunk.js.map",
     "runtime-main.js": "/wolke-admin/static/js/runtime-main.a6268ff7.js",
     "runtime-main.js.map": "/wolke-admin/static/js/runtime-main.a6268ff7.js.map",
-    "static/js/2.8e899459.chunk.js": "/wolke-admin/static/js/2.8e899459.chunk.js",
-    "static/js/2.8e899459.chunk.js.map": "/wolke-admin/static/js/2.8e899459.chunk.js.map",
+    "static/js/2.df5ec073.chunk.js": "/wolke-admin/static/js/2.df5ec073.chunk.js",
+    "static/js/2.df5ec073.chunk.js.map": "/wolke-admin/static/js/2.df5ec073.chunk.js.map",
     "index.html": "/wolke-admin/index.html",
-    "static/css/main.008a0982.chunk.css.map": "/wolke-admin/static/css/main.008a0982.chunk.css.map",
-    "static/js/2.8e899459.chunk.js.LICENSE.txt": "/wolke-admin/static/js/2.8e899459.chunk.js.LICENSE.txt"
+    "static/css/main.390b1af8.chunk.css.map": "/wolke-admin/static/css/main.390b1af8.chunk.css.map",
+    "static/js/2.df5ec073.chunk.js.LICENSE.txt": "/wolke-admin/static/js/2.df5ec073.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a6268ff7.js",
-    "static/js/2.8e899459.chunk.js",
-    "static/css/main.008a0982.chunk.css",
-    "static/js/main.8a570ae5.chunk.js"
+    "static/js/2.df5ec073.chunk.js",
+    "static/css/main.390b1af8.chunk.css",
+    "static/js/main.da55e484.chunk.js"
   ]
 }
