@@ -61,7 +61,6 @@ function OAuth({ setAlert }) {
                                     }
                                     setRegisterUserName('');
                                     setPassword('');
-                                    console.log(resp);// TODO remove dev code
                                     setAlert({ title: 'Registered oAuth2 user' });
                                     getUsers();
                                 })
