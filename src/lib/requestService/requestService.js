@@ -25,7 +25,6 @@ function encodeURI(data) {
 
 class RequestService {
     _oAuth2_access_token = '';
-    _adminPassword = '';
 
     _get(url = `${rootUrl}/test/auth`) {
         const headers = {'Content-Type': 'application/json; charset=utf-8'};
@@ -69,44 +68,40 @@ class RequestService {
     loginToWolke({ username, password }) {
         return this._postEncodeURI(`${oAuthUrl}/login`, { username, password, grant_type: 'password', client_id: null, client_secret: null })
             .then(resp => {
+                if (!resp.access_token) {
+                    return {
+                        success: false
+                    };
+                }
                 this._oAuth2_access_token = resp.access_token;
-                this._adminPassword = password;
                 return {
                     success: true
                 };
             });
     }
 
-    logout() {
-        return new Promise(resolve => {
-            this._oAuth2_access_token = '';
-            this._adminPassword = '';
-            resolve();
-        });
+    getOAuthUsers({ admin_password }) {
+        return this._post(`${oAuthUrl}/get_all`, { admin_password });
     }
 
-    getOAuthUsers() {
-        return this._post(`${oAuthUrl}/get_all`, { admin_password: this._adminPassword });
+    registerOAuthUser({ username, password, admin_password }) {
+        return this._post(`${oAuthUrl}/register`, { username, password, admin_password, grant_type: 'password' });
     }
 
-    registerOAuthUser({ username, password }) {
-        return this._post(`${oAuthUrl}/register`, { username, password, admin_password: this._adminPassword, grant_type: 'password' });
-    }
-
-    deleteOAuthUser({ username }) {
-        return this._post(`${oAuthUrl}/delete`, { username, admin_password: this._adminPassword, grant_type: 'password' }); // TODO do we need grant_type?
+    deleteOAuthUser({ username, admin_password }) {
+        return this._post(`${oAuthUrl}/delete`, { username, admin_password, grant_type: 'password' }); // TODO do we need grant_type?
     }
 
     getCardsUsers() {
         return this._get(`${cardsUrl}/all_users`);
     }
 
-    registerCardsUser({ name, isAdmin, from, to }) {
-        return this._post(`${cardsUrl}/upsert_user`, { name, isAdmin, from, to, admin_password: this._adminPassword });
+    registerCardsUser({ name, isAdmin, from, to, admin_password }) {
+        return this._post(`${cardsUrl}/upsert_user`, { name, isAdmin, from, to, admin_password });
     }
 
-    deleteCardsUser({ name }) {
-        return this._post(`${cardsUrl}/delete_user`, { name, admin_password: this._adminPassword });
+    deleteCardsUser({ name, admin_password }) {
+        return this._post(`${cardsUrl}/delete_user`, { name, admin_password });
     }
 }
 

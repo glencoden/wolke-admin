@@ -36,8 +36,9 @@ function App() {
         setMenuRef(event.currentTarget);
     };
 
-    const handleMenuClose = ({ target }) => {
-        const updatedFeature = target.innerText;
+    const handleMenuClose = event => {
+        event.stopPropagation();
+        const updatedFeature = event.target.innerText;
         if (featureNames.includes(updatedFeature)) {
             setCurrentFeature(updatedFeature);
         }
@@ -68,7 +69,7 @@ function App() {
                             color="primary"
                             aria-controls="simple-menu"
                             aria-haspopup="true"
-                            onClick={handleMenuClick}
+                            onPointerDown={handleMenuClick}
                         >
                             {currentFeature}
                         </Button>
@@ -77,10 +78,9 @@ function App() {
                             anchorEl={menuRef}
                             keepMounted
                             open={Boolean(menuRef)}
-                            onClose={handleMenuClose}
                         >
                             {featureNames.map((featureName, index) => (
-                                <MenuItem key={index} onClick={handleMenuClose}>
+                                <MenuItem key={index} onPointerDown={handleMenuClose}>
                                     {featureName}
                                 </MenuItem>
                             ))}
