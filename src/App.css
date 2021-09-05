@@ -1,38 +1,87 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --space-s: 20px;
+    --space-m: 40px;
+    --space-l: 60px;
+    --feature-box-grid-gap: var(--space-m);
+    --action-box-size: 282px;
+    --max-content-width: calc((3 * var(--action-box-size)) + (2 * var(--feature-box-grid-gap)));
+}
+
 .App {
-    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-m) 0 calc(2 * var(--space-l));
 }
 
 .top-line {
+    display: flex;
+    justify-content: space-between;
+    width: calc(var(--action-box-size) - (4 * var(--space-s)));
+    z-index: 100;
+    margin-bottom: var(--space-m);
+}
+
+.feature-box {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 20px;
-    justify-items: center;
-    width: 300px;
-    padding: 20px 0 0;
-    z-index: 1000;
+    grid-gap: var(--feature-box-grid-gap);
+    grid-template-columns: repeat(auto-fit, minmax(var(--action-box-size), 1fr));
+    max-width: min(calc(100% - (2 * var(--space-m))), var(--max-content-width));
 }
 
-.center-column {
-    display: grid;
-    grid-row-gap: 20px;
-    justify-items: center;
-    padding-top: 60px;
+.feature-box > * {
+    padding: var(--space-s);
 }
 
-.title, .input-field {
-    width: 240px;
+.action-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: var(--action-box-size);
+    min-height: var(--action-box-size);
+    padding-top: calc(-1 * var(--space-s));
 }
 
-.checkbox, .cta-button {
-    justify-self: start;
+.action-box > * {
+    margin-top: var(--space-s);
 }
 
-.cta-button {
-    margin-top: 20px !important;
+.elements-box {
+    display: flex;
+    flex-direction: column;
 }
 
-@media only screen and (min-width: 600px) {
+.elements-box > * {
+    margin-bottom: var(--space-s) !important;
+}
+
+.list-item {
+    margin: 0 !important;
+}
+
+.alert-error {
+    color: red;
+}
+
+/* break when more than one action-box column will fit (> 2 * action-box-size + 3 * feature-box-grid-gap)  */
+@media only screen and (min-width: 684px) {
+    .App {
+        padding: var(--space-l) 0 calc(2 * var(--space-l));
+    }
+
     .top-line {
-        padding: 60px 0 20px;
+        margin-bottom: var(--space-l);
+    }
+
+    .feature-box > *:nth-child(even) {
+        justify-self: start;
+    }
+
+    .feature-box > *:nth-child(odd) {
+        justify-self: end;
     }
 }
